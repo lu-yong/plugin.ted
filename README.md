@@ -1,0 +1,2 @@
+# plugin.ted
+TED Talks began as a simple attempt to share what happens at TED with the world. Under the moniker ideas worth spreading, talks were released online. They rapidly attracted a global audience in the millions. Indeed, the reaction was so enthusiastic that the entire TED website has been reengineered around TED Talks, with the goal of giving everyone on-demand access to the world's most inspiring voices.
