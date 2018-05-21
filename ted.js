@@ -118,10 +118,18 @@ function scraper(page, params) {
         if (!tryToSearch) return false;
         page.loading = true;
         var doc = http.request(url + param).toString();
+
         page.loading = false;
         // 1-icon, 2-duration, 3-speaker, 4-link, 5-title, 6-posted, 7-rated
         var re = /<div class='media media--sm-v'>[\s\S]*?src="([\s\S]*?)"[\s\S]*?class="thumb__duration">([\s\S]*?)<\/span>[\s\S]*?speaker'>([\s\S]*?)<[\s\S]*?href='([\s\S]*?)'>([\s\S]*?)<\/a>[\s\S]*?<span class='meta__val'>([\s\S]*?)<\/span>([\s\S]*?)<\/div>/g;
         var match = re.exec(doc);
+        if(null === match){
+            var result_re = /<div class='browse__no-results'>[\s\S]*?<div class='h3 m2'>([\s\S]*?)<\/div>/g;
+            var match = result_re.exec(doc);
+            page.appendItem(plugin.id + 'playcmd:null', 'video',{title: match[1]});
+            return false;
+        }
+
         while (match) {
             var genre = match[7].match(/<span class='meta__val'>([\s\S]*?)<\/span>/);
             page.appendItem(plugin.id + ':talk:' + encodeURIComponent(match[4]) + ':' + encodeURIComponent(trim(match[5])), "directory", {
