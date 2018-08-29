@@ -124,7 +124,7 @@ function scraper(page, params) {
         var re = /<div class='media media--sm-v'>[\s\S]*?src="([\s\S]*?)"[\s\S]*?class="thumb__duration">([\s\S]*?)<\/span>[\s\S]*?speaker'>([\s\S]*?)<[\s\S]*?href='([\s\S]*?)'>([\s\S]*?)<\/a>[\s\S]*?<span class='meta__val'>([\s\S]*?)<\/span>([\s\S]*?)<\/div>/g;
         var match = re.exec(doc);
         if(null === match){
-            page.appendItem(plugin.id + 'playcmd:null', 'video', {title: "No Content"});
+            appendItem(page, 'null', "No Content", "", "");
             return false;
         }
 
