@@ -25,6 +25,7 @@ var plugin = JSON.parse(Plugin.manifest);
 var logo = Plugin.path + plugin.icon;
 
 var BASE_URL = 'https://www.ted.com';
+var category_name_bak = '';
 
 RichText = function(x) {
     this.str = x.toString();
@@ -113,6 +114,15 @@ function scraper(page, params) {
     var tryToSearch = first = true, param = '', pageNum = 1;
     page.entries = 0;
     var url = params;
+    var total = 0;
+    var category_name;
+
+    category_name = params.substring(params.indexOf('='), params.length);
+    if(category_name !== category_name_bak)
+    {
+        total = 0;
+        category_name_bak = category_name;
+    }
 
     function loader() {
         if (!tryToSearch) return false;
@@ -130,13 +140,15 @@ function scraper(page, params) {
 
         while (match) {
             var genre = match[7].match(/<span class='meta__val'>([\s\S]*?)<\/span>/);
+            total++;
             page.appendItem(plugin.id + ':talk:' + encodeURIComponent(match[4]) + ':' + encodeURIComponent(trim(match[5])), "directory", {
                 title: string.entityDecode(match[3]) + ' - ' + string.entityDecode(trim(match[5])),
                 backdrops: [{url: match[1]}],
                 duration: match[2],
                 genre: (genre ? trim(genre[1]) : ''),
                 tagline: string.entityDecode(trim(match[5])),
-                source: new RichText('Posted: ' + trim(match[6]))
+                source: new RichText('Posted: ' + trim(match[6])),
+                extra_data: "total dynamic: " + total
             });
             page.entries++;
             match = re.exec(doc);
