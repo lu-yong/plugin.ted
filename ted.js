@@ -72,6 +72,7 @@ function appendItem(page, url, title, description, icon) {
     page.appendItem(link, "video", {
         title: new RichText(title),
         description: description,
+        icon: icon,
         backdrops: [{url: icon}]
     });
 }
@@ -143,6 +144,7 @@ function scraper(page, params) {
             total++;
             page.appendItem(plugin.id + ':talk:' + encodeURIComponent(match[4]) + ':' + encodeURIComponent(trim(match[5])), "directory", {
                 title: string.entityDecode(match[3]) + ' - ' + string.entityDecode(trim(match[5])),
+                icon: match[1],
                 backdrops: [{url: match[1]}],
                 duration: match[2],
                 genre: (genre ? trim(genre[1]) : ''),
