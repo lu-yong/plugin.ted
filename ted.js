@@ -57,8 +57,6 @@ function trim(str) {
 service.create(plugin.title, plugin.id + ":start", 'video', true, logo);
 
 function appendItem(page, url, title, description, icon) {
-    if (url.match(/m3u8/))
-        url = url;
 
     var link = "videoparams:" + JSON.stringify({
         title: title,
@@ -83,32 +81,12 @@ new page.Route(plugin.id + ":talk:(.*):(.*)", function(page, link, title) {
     var doc = http.request(BASE_URL + decodeURIComponent(link)).toString();
     page.loading = false;
     var json = JSON.parse(doc.match(/INITIAL_DATA__": ([\s\S]*?)\}\)/)[1]);
-    //delete m3u8 video, because this is same as the other one.
-    /*appendItem(page, json.talks[0].player_talks[0].resources.hls.stream,
+
+    appendItem(page,
+        json.talks[0].player_talks[0].resources.hls.stream,
         decodeURIComponent(title),
         json.description,
-        json.talks[0].player_talks[0].thumb);*/
-
-    appendItem(page, json.talks[0].downloads.nativeDownloads.high,
-        string.entityDecode(decodeURIComponent(title)),
-        json.description,
         json.talks[0].player_talks[0].thumb);
-
-    /*json = json.talks[0].downloads.subtitledDownloads;
-    var first = true;
-    for (var i in json) {
-        if (first) {
-            page.appendItem("", "separator", {
-                title: 'With subtitles:'
-            });
-            first = false;
-        }
-        print("!!!!!!!!!!!" + json[i].name + "!!!!!!!!!!!!!!");
-        if (json[i].high)
-            appendItem(page, json[i].high, json[i].name, null);
-        else
-            appendItem(page, json[i].low, json[i].name, null);
-    }*/
 });
 
 function scraper(page, params) {
