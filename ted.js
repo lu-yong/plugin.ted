@@ -57,7 +57,7 @@ var BASE_URL = "https://www.ted.com";
         page.loading = false;
 
         var play_url;
-        var json = JSON.parse(doc.match(/INITIAL_DATA__": ([\s\S]*?)\}\)/)[1]);
+        var json = JSON.parse(doc.match(/INITIAL_DATA__":([\s\S]*?)\}\)/)[1]);
         var description_str = "Title: " + info.title
                             + "\nSpeaker: " + info.speaker
                             + "\nDuration: " + info.duration
@@ -145,7 +145,7 @@ function ted_refresh_page(page, channel_name, style_name) {
         while (match) {
             total++;
             //print("\n---- video ----\n" + match[1] + "\n" + match[2] + "\n" + match[3] + "\n" + match[4] + "\n" + match[5] + "\n" + match[6] + "\n" + match[7] + "\n");
-            var icon_url = match[2].match(/([\s\S]*?)quality=/)[1] + "quality=5&amp;w=50";
+            var icon_url = match[2].match(/([\s\S]*?)quality=/)[1] + "quality=89&w=160";
             //print("\n----icon_url----\n" + icon_url + "\n");
             var video_info = {
                 video_id: match[5],
