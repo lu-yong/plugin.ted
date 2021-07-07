@@ -139,6 +139,7 @@ function ted_refresh_page(page, channel_name, style_name) {
         var match = re.exec(doc);
         if(null === match) {
             page_num--;
+            page.appendItem(PLUGIN_PREFIX + 'play_url:null', 'video',{title: "No Content"});
             return false;
         }
 
